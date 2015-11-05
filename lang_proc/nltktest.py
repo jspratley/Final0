@@ -4,23 +4,6 @@ import nltk
 from nltk.tokenize import sent_tokenize, RegexpTokenizer
 from nltk.tag import pos_tag, map_tag
 
-"""
-sentence = ""
-tokens = nltk.word_tokenize(sentence)
-tagged = nltk.pos_tag(tokens)
-print(tagged[0:6])
-
-#entities = nltk.chunk.ne_chunk(tagged)
-#print(entities)
-t = treebank.parsed_sents('wsj_0001.mrg')[0]
-t.draw()
-"""
-
-
-#Have a description for NNS go to Noun for example. Create larger buckets for types. Can do.
-#Eliminate plural words if possible????????????????????????????????????????????????????????????????????????????????????????????????????????????????
-#Decide whether to keep punctuation. Probably keep it.
-#Filter out punctuation on display.
 def place_tagged_in_lexicon(tags, lexicon):
     """
     Place the word (converted to lower case) in the correct tag category.
@@ -48,19 +31,11 @@ def add_sentence(sent, lexicon):
             {'VERB': ['are', 'be', 'processed'], 'ADP': ['of'], 'NOUN': ['bunch', 'words'], 'DET': ['these', 'a'], 'PRT': ['to']}
     :param sent: A sentence to be processed, tagged, and placed in the lexicon
     """
-    lexicon = {}
     mytok = nltk.word_tokenize(sent)
     tags = nltk.pos_tag(mytok)
     tags = [(word, map_tag('en-ptb', 'universal', tag)) for word, tag in tags]
     place_tagged_in_lexicon(tags, lexicon)
-    # Place the word (converted to lower case) in the correct tag category.
-    for key in tags:
-        if key[1] in lexicon:
-            if key[0] not in lexicon[key[1]]:
-                lexicon[key[1]].append(key[0].lower())
-        else:
-            lexicon[key[1]] = [key[0].lower()]
-    return lexicon
+
 
 
 def add_sentence_complex(sent, lexicon):

@@ -12,8 +12,9 @@ def index():
 @app.route('/submit', methods=['POST', 'GET'])
 def submit():
     sentence = request.args.get('sentence', "", type=str)
-    word_cats = nltktest.add_sentence(sentence)
-    return jsonify(word_cats=word_cats)
+    lex = {}
+    nltktest.add_sentence(sentence, lex)
+    return jsonify(word_cats=lex)
 
 if __name__ == '__main__':
     app.run()

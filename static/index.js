@@ -5,7 +5,6 @@ $('document').ready(function() {
         $.getJSON($SCRIPT_ROOT + '/submit', {
             sentence: $('input[name="sent"]').val()
         }, function(data) {
-            
             $('#lexicon').append('<p>' + data.word_cats.NOUN + '</p>');
         });
     });
