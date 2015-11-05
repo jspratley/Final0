@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title></title>
+    <title>LexSim</title>
+    <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='style.css') }}">
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:300' rel='stylesheet' type='text/css'>
+    <script src="/static/jquery-2.1.4.min.js"></script>
+    <script src="/static/index.js"></script>
+    <script type=text/javascript>
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
 </head>
 <body>
-
+    <h1>LexSim</h1>
+    <div id="lexicon"></div>
+    <div id="user-in">
+        <p>Type a sentence here:</p>
+        <input id="sentence" type="text" name="sent">
+        <input id="share" type="submit">
+    </div>
 </body>
-</html>

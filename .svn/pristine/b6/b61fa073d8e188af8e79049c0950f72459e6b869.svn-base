@@ -16,6 +16,7 @@ print(tagged[0:6])
 t = treebank.parsed_sents('wsj_0001.mrg')[0]
 t.draw()
 """
+lexicon = {}
 
 
 #Have a description for NNS go to Noun for example. Create larger buckets for types. Can do.
@@ -35,7 +36,6 @@ def add_sentence(sent):
             {'VERB': ['are', 'be', 'processed'], 'ADP': ['of'], 'NOUN': ['bunch', 'words'], 'DET': ['these', 'a'], 'PRT': ['to']}
     :param sent: A sentence to be processed, tagged, and placed in the lexicon
     """
-    lexicon = {}
     mytok = nltk.word_tokenize(sent)
     tags = nltk.pos_tag(mytok)
     tags = [(word, map_tag('en-ptb', 'universal', tag)) for word, tag in tags]
@@ -47,4 +47,15 @@ def add_sentence(sent):
                 lexicon[key[1]].append(key[0].lower())
         else:
             lexicon[key[1]] = [key[0].lower()]
-    return lexicon
+
+
+def main():
+    sent = input("Enter a paragraph: ")
+    sent_tokenize_list = sent_tokenize(sent)
+    for s in sent_tokenize_list:
+        add_sentence(s)
+    print(lexicon)
+
+
+
+main()
