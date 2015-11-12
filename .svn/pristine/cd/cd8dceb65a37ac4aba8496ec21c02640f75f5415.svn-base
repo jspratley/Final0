@@ -1,0 +1,45 @@
+from flask import Flask, render_template, request, jsonify, g
+from contextlib import closing
+from lang_proc import nltktest
+import sqlite3
+
+#Configuration
+DATABASE = 'C:/Temp/lex.db'
+DEBUG = True
+SECRET_KEY = 'disizdeend343'
+
+app = Flask(__name__)
+app.config.from_object(__name__)
+
+def connect_db():
+    return sqlite3.connect(app.config['DATABASE'])
+
+def init_db():
+    with closing(connect_db()) as db:
+        with app.open_resource('schema.sql', mode='r') as f:
+            db.cursor().executescript(f.read())
+        db.commit()
+
+@app.before_request
+def before_request():
+    g.db = connect_db()
+
+@app.teardown_request
+def teardown_request(exception):
+    db = getattr(g, 'db', None)
+    if db is not None:
+        db.close()
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/submit', methods=['POST', 'GET'])
+def submit():
+    sentence = request.args.get('sentence', "", type=str)
+    lex = {}
+    nltktest.add_sentence(sentence, lex)
+    return jsonify(word_cats=lex)
+
+if __name__ == '__main__':
+    app.run()

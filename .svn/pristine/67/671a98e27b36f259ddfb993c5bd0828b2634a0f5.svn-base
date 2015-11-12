@@ -21,11 +21,6 @@ def init_db():
         db.commit()
 
 def add_to_db(lexicon):
-    """
-    Adds data to the database (not yet a way to retrieve it)
-    :param lexicon: lexicon to be processed and inserted
-    :return: nothing
-    """
     if 'VERB' in lexicon:
         for w in lexicon['VERB']:
             g.db.execute('insert into verbs (word) values (?)',
@@ -92,8 +87,8 @@ def index():
 
 @app.route('/submit', methods=['POST', 'GET'])
 def submit():
-    sentence = request.args.get('sentence', "", type=str)
-    #sentence = request.form['sentence']
+    #sentence = request.args.get('sentence', "", type=str)
+    sentence = request.form['sentence']
     lex = {}
     nltktest.add_sentence(sentence, lex)
     add_to_db(lex)

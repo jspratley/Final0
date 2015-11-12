@@ -1,0 +1,65 @@
+drop table if exists verbs;
+create table verbs (
+  id integer primary key autoincrement,
+  word text not null
+);
+
+drop table if exists nouns;
+create table verbs (
+  id integer primary key autoincrement,
+  word text not null
+);
+
+drop table if exists pronouns;
+create table verbs (
+  id integer primary key autoincrement,
+  word text not null
+);
+
+drop table if exists adjs;
+create table verbs (
+  id integer primary key autoincrement,
+  word text not null
+);
+
+drop table if exists adpos;
+create table verbs (
+  id integer primary key autoincrement,
+  word text not null
+);
+
+drop table if exists conjs;
+create table verbs (
+  id integer primary key autoincrement,
+  word text not null
+);
+
+drop table if exists dets;
+create table verbs (
+  id integer primary key autoincrement,
+  word text not null
+);
+
+drop table if exists numbers;
+create table verbs (
+  id integer primary key autoincrement,
+  word text not null
+);
+
+drop table if exists functwords;
+create table verbs (
+  id integer primary key autoincrement,
+  word text not null
+);
+
+drop table if exists others;
+create table verbs (
+  id integer primary key autoincrement,
+  word text not null
+);
+
+drop table if exists puncs;
+create table verbs (
+  id integer primary key autoincrement,
+  word text not null
+);

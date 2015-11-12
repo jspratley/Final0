@@ -1,0 +1,9 @@
+0000000000000000000000000000000000000000 a5e97710caccd95a2d76fc757815affaaaaff44b jspratley <jessicaspratley@gmail.com> 1446674436 -0600	commit (initial): :circus_tent: Added .gitattributes & .gitignore files
+a5e97710caccd95a2d76fc757815affaaaaff44b 08c5a5b11b07dd7e4d94ecf37fd594a9fd9a155a jspratley <jessicaspratley@gmail.com> 1446691799 -0600	commit: All the actual things we need.
+08c5a5b11b07dd7e4d94ecf37fd594a9fd9a155a 3325bbdb2c2c32f7030d4a476b0014c0e05f987a jspratley <jessicaspratley@gmail.com> 1446692256 -0600	commit: SO MAYBE THESE WILL SHOW UP
+3325bbdb2c2c32f7030d4a476b0014c0e05f987a dea51f8328b493800cfe7730a7ef979ef4088a6b jspratley <jessicaspratley@gmail.com> 1446692580 -0600	pull --progress --prune origin master: Fast-forward
+dea51f8328b493800cfe7730a7ef979ef4088a6b b16a4aa786a3fb0347aa958cf9eaa5b82683d986 jspratley <jessicaspratley@gmail.com> 1446751572 -0600	commit: So can I commit my side of things?
+b16a4aa786a3fb0347aa958cf9eaa5b82683d986 27e42613d0322dee310d6dfde5cd21a49d5c0a1e jspratley <jessicaspratley@gmail.com> 1446751584 -0600	pull --progress --rebase --prune origin master: checkout 27e42613d0322dee310d6dfde5cd21a49d5c0a1e
+27e42613d0322dee310d6dfde5cd21a49d5c0a1e b16a4aa786a3fb0347aa958cf9eaa5b82683d986 jspratley <jessicaspratley@gmail.com> 1446751596 -0600	rebase: aborting
+b16a4aa786a3fb0347aa958cf9eaa5b82683d986 3d20ac588a2271b17523a867400424a0ad532ee5 jspratley <jessicaspratley@gmail.com> 1446752055 -0600	commit (merge): Merge remote-tracking branch 'origin/master'
+3d20ac588a2271b17523a867400424a0ad532ee5 de186d1f8d91031c678d3c4c4141cb5a07b4a4f2 jspratley <jessicaspratley@gmail.com> 1446754614 -0600	commit: Okay I fixed things that were messed up.
