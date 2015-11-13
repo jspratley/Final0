@@ -75,6 +75,44 @@ def add_paragraph_no_punctuation(paragraph, lexicon):
     tags = [(word, map_tag('en-ptb', 'universal', tag)) for word, tag in tags]
     place_tagged_in_lexicon(tags, lexicon)
 
+def create_structure_from_sentence(sentence):
+    """
+    Creates the dictionary for the visualization.
+
+    :param sentence: A sentence to be reformatted
+    :return: visualization structure
+    """
+    temp_lex = {}
+    temp_lex["children"] = {}
+    add_sentence(sentence, temp_lex["children"])
+    lexicon = {'name': 'lexicon', 'children': []}
+    new_char_list = [x for x in temp_lex["children"].keys()]
+    words_by_type = [temp_lex["children"][x] for x in new_char_list]
+
+    #words_by_type = [["Word", "Letters"], ["More", "Another"]]
+    for i in range(len(new_char_list)):
+        type_dict = {'name': new_char_list[i], 'children': []}
+        for a in words_by_type[i]:
+            type_dict['children'].append({'name': a})
+        lexicon['children'].append(type_dict)
+    return lexicon
+
+def tag_in_twos(sent):
+    """
+    Tags the sentence in the traditional nltk method.
+    Example:
+        Input:
+            These are words
+        Output:
+            [('These', 'DET'), ('are', 'VERB'), ('words', 'NOUN')]
+    :param sent: A sentence to tag
+    :return: words and their tags.
+    """
+    mytok = nltk.word_tokenize(sent)
+    tags = nltk.pos_tag(mytok)
+    tags = [(word, map_tag('en-ptb', 'universal', tag)) for word, tag in tags]
+    return tags
+
 
 def print_words_in_lexicon(lexicon):
     """

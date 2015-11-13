@@ -1,8 +1,9 @@
 $('document').ready(function() {
 
-    var width = 960;
-    height = 800;
+    var width = 500;
+    height = 400;
 
+    // Creates force layout for visualization
     var force = d3.layout.force()
                 .linkDistance(90)
                 .charge(-110)
@@ -10,6 +11,7 @@ $('document').ready(function() {
                 .size([width, height])
                 .on("tick", tick);
 
+    // Creates container to hold visualization
     var svg = d3.select("#lexicon").append("svg")
                 .attr("width", width)
                 .attr("height", height);
@@ -39,11 +41,11 @@ $('document').ready(function() {
                             .call(force.drag);
 
         nodeEnter.append("circle")
-                .attr("r", function(d) { return Math.sqrt(d.size) / 10 || 4.5; });
+                .attr("r", function(d) { return 28; });
 
         nodeEnter.append("text")
                 .attr("dy", ".35em")
-                .text(function(d) { return d.NOUN; });
+                .text(function(d) { return d.name; });
 
         node.select("circle")
             .style("fill", color);

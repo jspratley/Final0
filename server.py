@@ -26,54 +26,9 @@ def add_to_db(lexicon):
     :param lexicon: lexicon to be processed and inserted
     :return: nothing
     """
-    if 'VERB' in lexicon:
-        for w in lexicon['VERB']:
-            g.db.execute('insert into verbs (word) values (?)',
-                                [w])
-    if 'NOUN' in lexicon:
-        for w in lexicon['NOUN']:
-            g.db.execute('insert into nouns (word) values (?)',
-                                [w])
-    if 'PRON' in lexicon:
-        for w in lexicon['PRON']:
-            g.db.execute('insert into pronouns (word) values (?)',
-                            [w])
-    if 'ADJ' in lexicon:
-        for w in lexicon['ADJ']:
-            g.db.execute('insert into adjs (word) values (?)',
-                            [w])
-    if 'ADV' in lexicon:
-        for w in lexicon['ADV']:
-            g.db.execute('insert into advs (word) values (?)',
-                            [w])
-    if 'ADP' in lexicon:
-        for w in lexicon['ADP']:
-            g.db.execute('insert into adpos (word) values (?)',
-                            [w])
-    if 'CONJ' in lexicon:
-        for w in lexicon['CONJ']:
-            g.db.execute('insert into conjs (word) values (?)',
-                            [w])
-    if 'DET' in lexicon:
-        for w in lexicon['DET']:
-            g.db.execute('insert into dets (word) values (?)',
-                            [w])
-    if 'NUM' in lexicon:
-        for w in lexicon['NUM']:
-            g.db.execute('insert into numbers (word) values (?)',
-                            [w])
-    if 'PRT' in lexicon:
-        for w in lexicon['PRT']:
-            g.db.execute('insert into functwords (word) values (?)',
-                            [w])
-    if 'X' in lexicon:
-        for w in lexicon['X']:
-            g.db.execute('insert into others (word) values (?)',
-                            [w])
-    if '.' in lexicon:
-        for w in lexicon['.']:
-            g.db.execute('insert into puncs (word) values (?)',
-                            [w])
+    for w in lexicon:
+        g.db.execute('insert into entries (word, wordtype) values (?, ?)',
+                     [w[0], w[1]])
     g.db.commit()
 
 @app.before_request
@@ -93,10 +48,12 @@ def index():
 @app.route('/submit', methods=['POST', 'GET'])
 def submit():
     sentence = request.args.get('sentence', "", type=str)
+    tagged = nltktest.tag_in_twos(sentence)
+    add_to_db(tagged)
     lex = {}
-    nltktest.add_sentence(sentence, lex)
-    add_to_db(lex)
+    lex = nltktest.create_structure_from_sentence(sentence)
     return jsonify(word_cats=lex)
 
 if __name__ == '__main__':
+    init_db()
     app.run()

@@ -62,3 +62,29 @@ input {
     background-color: #317762;
     border: 1px solid #83002E;
 }
+
+line.link {
+  stroke: #5d1919;
+  stroke-width: 1.5px;
+}
+
+.node circle {
+  cursor: pointer;
+  stroke: #5d1919;
+  stroke-width: 1.5px;
+}
+
+svg {
+    margin: auto;
+    width: 50%;
+    float: center;
+    font-size: 14px;
+    font-family: 'Merriweather', serif;
+    color: #83002E;
+    display: block;
+}
+
+.node text {
+  pointer-events: none;
+  text-anchor: middle;
+}
