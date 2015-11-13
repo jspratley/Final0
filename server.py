@@ -93,7 +93,6 @@ def index():
 @app.route('/submit', methods=['POST', 'GET'])
 def submit():
     sentence = request.args.get('sentence', "", type=str)
-    #sentence = request.form['sentence']
     lex = {}
     nltktest.add_sentence(sentence, lex)
     add_to_db(lex)
