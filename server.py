@@ -26,10 +26,32 @@ def add_to_db(lexicon):
     :param lexicon: lexicon to be processed and inserted
     :return: nothing
     """
-    for w in lexicon:
-        g.db.execute('insert into entries (word, wordtype) values (?, ?)',
-                     [w[0], w[1]])
+    for cat in lexicon['children']:
+        for w in cat['children']:
+            g.db.execute('insert or ignore into entries (word, wordtype) values (?, ?)',
+                         [w['name'], cat['name']])
     g.db.commit()
+
+def extract_from_db():
+    """
+    Retrieves data from the database
+    :return: lexicon dictionary matching the necessary format for the visualization
+    """
+    lexicon = {'name': 'lexicon', 'children': []}
+    type_dict = {}
+
+    cur = g.db.execute('select word, wordtype from entries order by id desc')
+    for row in cur.fetchall():
+        if row[1] not in type_dict:
+            type_dict[row[1]] = []
+        type_dict[row[1]].append(row[0])
+    for key in type_dict:
+        temp_dict = {'name': key, 'children': []}
+        for w in type_dict[key]:
+            word_dict = {'name': w}
+            temp_dict['children'].append(word_dict)
+        lexicon['children'].append(temp_dict)
+    return lexicon
 
 @app.before_request
 def before_request():
@@ -45,15 +67,18 @@ def teardown_request(exception):
 def index():
     return render_template('index.html')
 
+@app.route('/lex', methods=['GET'])
+def lex():
+    updated_lex = extract_from_db()
+    return jsonify(word_cats=updated_lex)
+
 @app.route('/submit', methods=['POST', 'GET'])
 def submit():
     sentence = request.args.get('sentence', "", type=str)
-    tagged = nltktest.tag_in_twos(sentence)
-    add_to_db(tagged)
-    lex = {}
     lex = nltktest.create_structure_from_sentence(sentence)
-    return jsonify(word_cats=lex)
+    add_to_db(lex)
+    updated_lex = extract_from_db()
+    return jsonify(word_cats=updated_lex)
 
 if __name__ == '__main__':
-    init_db()
     app.run()

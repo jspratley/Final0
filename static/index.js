@@ -2,6 +2,7 @@ $('document').ready(function() {
 
     var width = 500;
     height = 400;
+    var root = null
 
     // Creates force layout for visualization
     var force = d3.layout.force()
@@ -91,12 +92,16 @@ $('document').ready(function() {
         return nodes;
     }
 
+    $.getJSON($SCRIPT_ROOT + '/lex', function(data) {
+        root = data.word_cats;
+        update(root);
+    });
+
     // This function is supposed to send data to the backend and retrieve it from the front end
     $('#share').on('click', function() {
         $.getJSON($SCRIPT_ROOT + '/submit', {
             sentence: $('input[name="sent"]').val()
         }, function(data) {
-            root = data.word_cats;
             update(root);
         });
     });
