@@ -2,7 +2,6 @@ $('document').ready(function() {
 
     var width = 500;
     height = 400;
-    var root = null
 
     // Creates force layout for visualization
     var force = d3.layout.force()
@@ -100,10 +99,26 @@ $('document').ready(function() {
     // This function is supposed to send data to the backend and retrieve it from the front end
     $('#share').on('click', function() {
         $.getJSON($SCRIPT_ROOT + '/submit', {
-            sentence: $('input[name="sent"]').val()
+            sentence: $('input[name="sent"]').val(),
+            file: getFileText($('input[name="fileUp"]').files[0])
         }, function(data) {
+            root = data.word_cats;
             update(root);
+            console.log('Why is this not working?');
+            $('#prod_sentence').empty();
+            $('#prod_sentence').append('<p>' + data.new_sent + '</p>');
         });
     });
+
+    function getFileText(file) {
+        if (!file) {
+            return null;
+        }
+
+        fr = new FileReader();
+        fr.readAsText(file);
+        console.log(fr.result);
+        return fr.result;
+    }
 
 });

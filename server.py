@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, g
 from contextlib import closing
-from lang_proc import nltktest
+from lang_proc import nltktest, markovchain
 import sqlite3
 
 #Configuration
@@ -75,10 +75,18 @@ def lex():
 @app.route('/submit', methods=['POST', 'GET'])
 def submit():
     sentence = request.args.get('sentence', "", type=str)
+
+    #Create the markov chain and get the new sentence
+    sentence_chain = markovchain.MarkovChain(2)
+    sentence_chain.train_paragraph(sentence)
+    new_sentence = sentence_chain.generate_by_words()
+
+    #Create the lexicon from the database
     lex = nltktest.create_structure_from_sentence(sentence)
     add_to_db(lex)
     updated_lex = extract_from_db()
-    return jsonify(word_cats=updated_lex)
+    return jsonify(word_cats=updated_lex, new_sent=new_sentence)
 
 if __name__ == '__main__':
+    init_db()
     app.run()

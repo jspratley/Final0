@@ -64,14 +64,14 @@ input {
 }
 
 line.link {
-  stroke: #5d1919;
-  stroke-width: 1.5px;
+    stroke: #5d1919;
+    stroke-width: 1.5px;
 }
 
 .node circle {
-  cursor: pointer;
-  stroke: #5d1919;
-  stroke-width: 1.5px;
+    cursor: pointer;
+    stroke: #5d1919;
+    stroke-width: 1.5px;
 }
 
 svg {
@@ -85,6 +85,14 @@ svg {
 }
 
 .node text {
-  pointer-events: none;
-  text-anchor: middle;
+    pointer-events: none;
+    text-anchor: middle;
+}
+
+#prod_sentence {
+    background-color: #317762 !important;
+    color: #F7B252;
+    border: 1px solid #83002E;
+    margin-top: 10px;
+    width: 100%;
 }

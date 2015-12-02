@@ -140,6 +140,17 @@ def print_words_in_lexicon(lexicon):
         for element in lexicon[key]:
             print("\t" + str(element))
 
+def get_tag_sequence(sent):
+    """
+
+    :param sent: A sentence to tag
+    :return: Tags in order.
+    """
+    mytok = nltk.word_tokenize(sent)
+    tags = nltk.pos_tag(mytok)
+    tags = [map_tag('en-ptb', 'universal', tag) for word, tag in tags]
+    return tags
+
 
 def main():
     """
