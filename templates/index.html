@@ -14,10 +14,12 @@
     <h1>LexSim</h1>
     <div id="lexicon"></div>
     <div id="user-in">
-        <p>Type a sentence here:</p>
-        <input id="sentence" type="text" name="sent">
+        <p>Type a sentence or paragraph here:</p>
+        <textarea id="sentence" type=text size=30 name="sent"></textarea>
         <p>Or upload a file (must be *.txt):</p>
-        <input id="upload" type="file" name="fileUp" multiple="false">
+        <input id="upload" type="file" multiple="false">
+        <p>What order Markov Chain would you like? <span>*The higher the order, the more data needed.</span></p>
+        <input id="order" type="number" name="ord">
         <input id="share" type="submit">
     </div>
     <div id="prod_sentence"></div>

@@ -32,10 +32,11 @@ input {
     margin: auto;
     float: center;
     display: block;
-    height: 25px;
+    height: 90px;
     font-size: 14px;
     font-family: 'Merriweather', serif;
     border: none;
+    border-radius: 5px;
 }
 
 #sentence:focus {

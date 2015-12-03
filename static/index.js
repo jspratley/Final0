@@ -1,7 +1,9 @@
 $('document').ready(function() {
 
     var width = 500;
-    height = 400;
+    var height = 400;
+    var placeholder = false;
+    var contents = null;
 
     // Creates force layout for visualization
     var force = d3.layout.force()
@@ -98,27 +100,47 @@ $('document').ready(function() {
 
     // This function is supposed to send data to the backend and retrieve it from the front end
     $('#share').on('click', function() {
-        $.getJSON($SCRIPT_ROOT + '/submit', {
-            sentence: $('input[name="sent"]').val(),
-            file: getFileText($('input[name="fileUp"]').files[0])
-        }, function(data) {
-            root = data.word_cats;
-            update(root);
-            console.log('Why is this not working?');
-            $('#prod_sentence').empty();
-            $('#prod_sentence').append('<p>' + data.new_sent + '</p>');
-        });
+        if ($('#upload')[0].files.length == 0 && $('textarea[name="sent"]').val() == null) {
+            alert('Please enter some data.');
+            return;
+        }
+        else if ($('#upload')[0].files.length == 0) {
+            $.getJSON($SCRIPT_ROOT + '/submit', {
+                sentence: $('textarea[name="sent"]').val(),
+                file: "",
+                order: $('input[name="ord"]').val()
+            }, function(data) {
+                root = data.word_cats;
+                update(root);
+                $('#prod_sentence').empty();
+                $('#prod_sentence').append('<p>' + data.new_sent + '</p>');
+            });
+        }
+        else {
+            getFileText($('#upload')[0].files[0], function(e) {
+                $.getJSON($SCRIPT_ROOT + '/submit', {
+                    sentence: $('textarea[name="sent"]').val(),
+                    file: e.target.result,
+                    order: $('input[name="ord"]').val()
+                }, function(data) {
+                    root = data.word_cats;
+                    update(root);
+                    $('#prod_sentence').empty();
+                    $('#prod_sentence').append('<p>' + data.new_sent + '</p>');
+                });
+            });
+        }
     });
 
-    function getFileText(file) {
+    function getFileText(file, onLoadText) {
+
         if (!file) {
             return null;
         }
 
         fr = new FileReader();
+        fr.onload = onLoadText;
         fr.readAsText(file);
-        console.log(fr.result);
-        return fr.result;
     }
 
 });

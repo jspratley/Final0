@@ -75,14 +75,23 @@ def lex():
 @app.route('/submit', methods=['POST', 'GET'])
 def submit():
     sentence = request.args.get('sentence', "", type=str)
+    text = request.args.get('file', "", type=str)
+    #order = request.args.get('order', 1, type=int)
+
+    lex = {}
 
     #Create the markov chain and get the new sentence
     sentence_chain = markovchain.MarkovChain(2)
-    sentence_chain.train_paragraph(sentence)
-    new_sentence = sentence_chain.generate_by_words()
+    if len(sentence) > 0:
+        sentence_chain.train_paragraph(sentence)
+        new_sentence = sentence_chain.generate_by_words()
+        lex = nltktest.create_structure_from_sentence(sentence)
+    if len(text) > 0:
+        sentence_chain.train_paragraph(text)
+        new_sentence = sentence_chain.generate_by_words()
+        lex = nltktest.create_structure_from_sentence(text)
 
     #Create the lexicon from the database
-    lex = nltktest.create_structure_from_sentence(sentence)
     add_to_db(lex)
     updated_lex = extract_from_db()
     return jsonify(word_cats=updated_lex, new_sent=new_sentence)
